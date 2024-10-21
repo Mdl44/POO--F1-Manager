@@ -1,0 +1,75 @@
+1. Clasa TeamPrincipal
+Atribute:
+name: Numele jucătorului.
+team: Referință către echipa gestionată.
+budget: Bugetul pentru îmbunătățiri și achiziții.
+
+Funcții:
+selectTeam(): Alege echipa preferată.
+manageResources(): Gestionarea resurselor pentru upgrade-uri.
+changeDrivers(Driver newDriver): Înlocuiește un pilot cu altul predefinit și face schimb de piloți între echipe.
+
+2. Clasa Team
+Atribute:
+name: Numele echipei.
+drivers[]: O listă de obiecte de tip Driver.
+car: Obiect de tip Car (care poate fi îmbunătățit).
+points: Punctele obținute în campionat.
+budget: Bugetul echipei.
+
+Funcții:
+addDriver(): Adaugă un pilot echipei.
+upgradeCar(): Alocă resurse pentru a îmbunătăți performanța mașinii.
+calculateOverallPerformance(): Calculează performanța totală a echipei.
+
+3. Clasa Driver
+Atribute:
+name: Numele pilotului.
+skillLevel: Nivelul de abilitate (rating).
+experience: Experiența în curse.
+aggressiveness: Nivelul de agresivitate.
+salary: Salariul pilotului.
+
+Funcții:
+calculatePerformance(): Calculează performanța pilotului pe baza abilităților și experienței.
+
+4. Clasa Car
+Atribute:
+speed: Viteza maximă.
+reliability: Fiabilitatea mașinii.
+aerodynamics: Nivelul de aerodinamică.
+powerUnit: Puterea motorului.
+overallRating: Rating general calculat din atributele mașinii.
+
+Funcții:
+improveSpeed(): Îmbunătățirea vitezei prin upgrade-uri.
+improveReliability(): Îmbunătățirea fiabilității.
+calculatePerformance(): Calculează performanța generală a mașinii.
+
+5.Clasa Race
+Atribute:
+circuitName: Numele circuitului.
+laps: Numărul de tururi.
+participatingTeams[]: O listă de echipe participante.
+
+Funcții:
+simulateRace(): Simulează cursa și returnează rezultatele.
+displayRace(): Afișează cursa vizual, cu mașinile reprezentate prin cercuri care se mișcă pe circuit.
+awardPoints(): Atribuie puncte echipelor pe baza rezultatului cursei.
+
+6.Clasa Qualifying
+Atribute:
+participatingTeams[]: O listă de echipe participante.
+qualifyingOrder[]: Un array care stochează ordinea de plecare după calificări.
+Funcții:
+simulateQualifying(): Simulează o sesiune de calificări de 1 tur, calculând timpii fiecărei echipe și ordonându-i în funcție de rezultate.
+getStartingGrid(): Returnează ordinea de start pentru cursă, cu distanțe între mașini bazate pe performanțele din calificări.
+
+7. Clasa Season
+Atribute:
+races[]: O listă de obiecte de tip Race care formează sezonul.
+teams[]: O listă de echipe participante.
+
+Functii:
+startSeason(): Pornește sezonul și gestionează succesiunea curselor.
+determineChampion(): Determină echipa și pilotul campion

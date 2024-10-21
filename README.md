@@ -13,8 +13,8 @@ Fiecare cursă va include o simulare vizuală în care jucătorul poate urmări 
 
 ### Tema 0
 
-- [ ] Nume proiect (poate fi schimbat ulterior)
-- [ ] Scurtă descriere a temei alese, ce v-ați propus să implementați
+- [Formula 1 Manager] Nume proiect (poate fi schimbat ulterior)
+- [tilizatorul va prelua rolul de manager al unei echipe, fiind responsabil de gestionarea resurselor, alegerea strategiilor de cursă, dezvoltarea mașinii și recrutarea de piloți. ] Scurtă descriere a temei alese, ce v-ați propus să implementați
 
 ## Tema 1
 
