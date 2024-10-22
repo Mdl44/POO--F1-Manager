@@ -29,9 +29,9 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Driver& driver);
 
-    void improveSkill(int expectedPosition, int racePosition);
+    void improveSkill();
     //void changeTeam();
-    void decreaseSkill(int expectedPosition, int racePosition);
+    void decreaseSkill();
     int calculateMarketValue() const;
 
     const std::string& getName() const;

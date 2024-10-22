@@ -1,73 +1,64 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.15)
 
-# NOTE: update executable name in .github/workflows/cmake.yml:25 when changing executable name in this file
-# for now, the project name is used as the executable name
+# Project name and C++ standard
 project(oop)
-# set(CMAKE_PROJECT_VERSION_MAJOR 0)
-# set(CMAKE_PROJECT_VERSION_MINOR 0)
-# set(CMAKE_PROJECT_VERSION_PATCH 1)
-
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include(cmake/Options.cmake)
-
-###############################################################################
-
-# external dependencies with FetchContent
-# include(FetchContent)
-#
-# set(FETCHCONTENT_QUIET OFF)
-# set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
-#
-# NOTE: Also update env vars used for caching in
-#         - .github/actions/configure-cmake/action.yml
-#         - .github/workflows/cmake.yml
-# FetchContent_Declare(
-#         SomeLib
-#         GIT_REPOSITORY https://github.com/<SomeUser>/<SomeLib>.git
-#         GIT_TAG        <some_git_hash> # <which tag/branch @ <some_date>>
-#         GIT_SHALLOW    1  # works only with branches or tags, not with arbitrary commit hashes
-# )
-#
-# FetchContent_MakeAvailable(SomeLib)
-
-###############################################################################
-
-# external dependencies with find_package
-
-# find_package(Threads REQUIRED)
-
-###############################################################################
-
-# NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
-add_executable(${PROJECT_NAME}
-    main.cpp
-    generated/src/Helper.cpp
+# FetchContent for external dependencies (SFML)
+include(FetchContent)
+FetchContent_Declare(
+        SFML
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG 2888d9c56eba4dedb93a84a3c57957e4a907d428
 )
+FetchContent_MakeAvailable(SFML)
 
-include(cmake/CompilerFlags.cmake)
+# Add executable and specify source and header files
+add_executable(oop
+        main.cpp
+        sources/Driver.cpp headers/Driver.h
+        #sources/Team.cpp headers/Team.h
+        #sources/Car.cpp headers/Car.h
+        #sources/Race.cpp headers/Race.h
+        #sources/Qualifying.cpp headers/Qualifying.h
+        #sources/TeamPrincipal.cpp headers/TeamPrincipal.h
+)
+# Include directories for header files
+target_include_directories(oop PRIVATE ${CMAKE_SOURCE_DIR}/headers)
 
-###############################################################################
+# Include SFML directories and link SFML libraries
+target_include_directories(oop SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
+target_link_directories(oop PRIVATE ${SFML_BINARY_DIR}/lib)
+target_link_libraries(oop sfml-graphics sfml-window sfml-system)
 
-# use SYSTEM so cppcheck and clang-tidy do not report warnings from these directories
-target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
-# target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
-# target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
-# target_link_directories(${PROJECT_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
-# target_link_libraries(${PROJECT_NAME} <SomeLib>)
-
-###############################################################################
-
-# copy binaries to "bin" folder; these are uploaded as artifacts on each release
-# DESTINATION_DIR is set as "bin" in cmake/Options.cmake:6
-install(TARGETS ${PROJECT_NAME} DESTINATION ${DESTINATION_DIR})
-if(APPLE)
-    install(FILES launcher.command DESTINATION ${DESTINATION_DIR})
+# Compiler flags for warnings and errors
+if(MSVC)
+    target_compile_options(oop PRIVATE /W4 /WX /wd4244 /wd4267 /permissive-)
+else()
+    target_compile_options(oop PRIVATE -Wall -Wextra -pedantic -Werror)
+    if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+        # Additional flags for GCC
+    elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+        target_compile_options(oop PRIVATE -stdlib=libc++)
+        target_link_options(oop PRIVATE -stdlib=libc++)
+    endif()
 endif()
 
-include(cmake/CopyHelper.cmake)
-copy_files(FILES tastatura.txt)
-# copy_files(FILES tastatura.txt config.json DIRECTORY images sounds)
-# copy_files(DIRECTORY images sounds)
+
+# Sanitizers (optional, adjust for your platform)
+if(APPLE)
+    target_compile_options(${PROJECT_NAME} PRIVATE -fsanitize=address,undefined)
+    target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address,undefined)
+elseif(UNIX)
+    if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+        target_compile_options(${PROJECT_NAME} PRIVATE -fsanitize=memory,undefined -fsanitize-memory-track-origins)
+        target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=memory,undefined -fsanitize-memory-track-origins)
+    endif()
+endif()
+
+# Installation rules to copy files and resources to the bin folder
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(DIRECTORY resources DESTINATION bin)
+install(FILES date.txt tastatura.txt DESTINATION bin)

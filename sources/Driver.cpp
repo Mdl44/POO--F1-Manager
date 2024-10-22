@@ -20,7 +20,7 @@ int Driver::calculateRating() const {
 }
 
 
-void Driver::improveSkill(int expectedPosition, int racePosition) {
+void Driver::improveSkill() {
     upgradePoints++;
 
     if (upgradePoints >= 5) {
@@ -37,7 +37,7 @@ void Driver::improveSkill(int expectedPosition, int racePosition) {
     }
 }
 
-void Driver::decreaseSkill(int expectedPosition, int racePosition) {
+void Driver::decreaseSkill() {
     decreasePoints++;
 
     if (decreasePoints >= 5) {

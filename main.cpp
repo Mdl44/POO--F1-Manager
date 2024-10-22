@@ -9,32 +9,32 @@ int main() {
     std::cout << "Driver Details:\n";
     std::cout << driver1 << std::endl;
     if(expectedPosition < racePosition) {
-        driver1.decreaseSkill(expectedPosition, racePosition);
-        driver1.decreaseSkill(expectedPosition, racePosition);
-        driver1.decreaseSkill(expectedPosition, racePosition);
-        driver1.decreaseSkill(expectedPosition, racePosition);
-        driver1.decreaseSkill(expectedPosition, racePosition);
+        driver1.decreaseSkill();
+        driver1.decreaseSkill();
+        driver1.decreaseSkill();
+        driver1.decreaseSkill();
+        driver1.decreaseSkill();
     } else {
-        driver1.improveSkill(expectedPosition, racePosition);
-        driver1.improveSkill(expectedPosition, racePosition);
-        driver1.improveSkill(expectedPosition, racePosition);
-        driver1.improveSkill(expectedPosition, racePosition);
-        driver1.improveSkill(expectedPosition, racePosition);
+        driver1.improveSkill();
+        driver1.improveSkill();
+        driver1.improveSkill();
+        driver1.improveSkill();
+        driver1.improveSkill();
     }
     expectedPosition = 1;
     racePosition = 1;
     if(expectedPosition < racePosition) {
-        driver1.decreaseSkill(expectedPosition, racePosition);
-        driver1.decreaseSkill(expectedPosition, racePosition);
-        driver1.decreaseSkill(expectedPosition, racePosition);
-        driver1.decreaseSkill(expectedPosition, racePosition);
-        driver1.decreaseSkill(expectedPosition, racePosition);
+        driver1.decreaseSkill();
+        driver1.decreaseSkill();
+        driver1.decreaseSkill();
+        driver1.decreaseSkill();
+        driver1.decreaseSkill();
     } else {
-        driver1.improveSkill(expectedPosition, racePosition);
-        driver1.improveSkill(expectedPosition, racePosition);
-        driver1.improveSkill(expectedPosition, racePosition);
-        driver1.improveSkill(expectedPosition, racePosition);
-        driver1.improveSkill(expectedPosition, racePosition);
+        driver1.improveSkill();
+        driver1.improveSkill();
+        driver1.improveSkill();
+        driver1.improveSkill();
+        driver1.improveSkill();
     }
     std::cout << "\nSkill Update:\n";
     std::cout << driver1 << std::endl;
